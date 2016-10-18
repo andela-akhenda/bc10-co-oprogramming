@@ -10,7 +10,7 @@ config = {
   "storageBucket": "co-oprogramming.appspot.com"
 }
 
-firebase = pyrebase.initialize_app(config)
+firebase = pyrebase.initialize_app(config) 
 
 email="akhenda@gmail.com"
 password="123456789"
@@ -21,7 +21,7 @@ user = auth.sign_in_with_email_and_password(email, password)
 
 @app.route('/',  methods=['GET', 'POST'])
 def index():
-    return "<h1>Hello, World!</h1>"    
+    return render_template('index.html')    
 
 
 
