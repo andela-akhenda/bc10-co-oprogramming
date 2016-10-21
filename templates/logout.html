@@ -9,7 +9,7 @@
 	<link rel='stylesheet' href='static/css/datatables/bootstrap.datatables.css'>
 	<link rel='stylesheet' href='static/scss/chosen.css'>
 	<link rel='stylesheet' href='static/scss/font-awesome/font-awesome.css'>
-	<link rel='stylesheet' href='static/css/app.css?q=145544464'>
+	<link rel='stylesheet' href='static/css/app.css?q=1512'>
 
 	<link href='http://fonts.googleapis.com/css?family=Oswald:300,400,700|Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 
@@ -36,32 +36,15 @@
 			{% with messages = get_flashed_messages() %}
 				{% if messages %}
 					   {% for message in messages %}
-						<div class="alert alert-success alert-dismissable">
-						  <i class="icon-exclamation-sign"></i> <strong>Error: </strong> {{ message }}
-						  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<div class="masked">
+							{{ message }}
 						</div>
 					   {% endfor %}
 				{% endif %}
 			{% endwith %}
-		
-			<section class="main">
-				<form class="form-1" method="POST">
-					<p class="field">
-						<input type="text" name="email" placeholder="Email">
-						<i class="icon-user icon-large"></i>
-					</p>
-					<p class="field">
-						<input type="password" name="pw" placeholder="Password">
-						<i class="icon-lock icon-large"></i>
-					</p>
-					<p class="submit">
-						<button type="submit" name="submit"><i class="icon-arrow-right icon-large"></i></button>
-					</p>
-				</form>
-			</section>
+			
 			<div class="sign-up">
-				<a href="{{ url_for('signup') }}" class="btn btn-success btn-xs" style="margin-right: 3px">Sign Up</a>
-				<a href="{{ url_for('forgot_password') }}" class="btn btn-info btn-xs" style="margin-left: 3px">Reset Password</a>
+				<a href="{{ url_for('login') }}" class="btn btn-success btn-lg" style="margin-right: 3px">Sign In</a>
 			</div>
 
 		</div>

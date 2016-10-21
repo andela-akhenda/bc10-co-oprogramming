@@ -249,9 +249,13 @@ table {
 *,
 *:before,
 *:after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
 html {
   font-size: 62.5%;
@@ -7742,4 +7746,558 @@ table .checkbox {
   background-image: url(../images/linen/linen-grey.jpg);
   background-repeat: repeat;
   background-position: top left;
+}
+
+
+
+/* ================== Additional Styles ========================== */
+/*.f-container {
+	width: 100%;
+	position: relative;
+}*/
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.form-1 p {
+	margin: 0;
+}
+.form-1 p .icon-large:before {
+    vertical-align: 0;
+}
+
+.main {
+	width: 90%;
+	margin: 0 auto;
+	position: relative;
+}
+.form-1 {
+	line-height: 0;
+    /* Size & position */
+    width: 300px;
+    margin: 60px auto 30px;
+    padding: 10px;
+    position: relative; /* For the submit button positioning */
+
+    /* Styles */
+    box-shadow: 
+        0 0 1px rgba(0, 0, 0, 0.3), 
+        0 3px 7px rgba(0, 0, 0, 0.3), 
+        inset 0 1px rgba(255,255,255,1),
+        inset 0 -3px 2px rgba(0,0,0,0.25);
+    border-radius: 5px;
+    background: white; /* Fallback */
+    background: -moz-linear-gradient(#eeefef, #ffffff 10%);
+    background: -ms-linear-gradient(#eeefef, #ffffff 10%);
+    background: -o-linear-gradient(#eeefef, #ffffff 10%);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#eeefef), color-stop(0.1, #ffffff));
+    background: -webkit-linear-gradient(#eeefef, #ffffff 10%);
+    background: linear-gradient(#eeefef, #ffffff 10%);
+}
+
+.form-1 .field {
+    position: relative; /* For the icon positioning */
+}
+
+.form-1 .field i {
+    /* Size and position */
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    height: 36px;
+    width: 36px;
+
+    /* Line */
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.7);
+
+    /* Styles */
+    color: #777777;
+    text-align: center;
+    line-height: 42px;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    pointer-events: none;
+}
+
+.form-1 input[type=text],
+.form-1 input[type=password] {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    /* Size and position */
+    width: 100%;
+    padding: 10px 18px 10px 45px;
+
+    /* Styles */
+    border: none; /* Remove the default border */
+    box-shadow: 
+        inset 0 0 5px rgba(0,0,0,0.1),
+        inset 0 3px 2px rgba(0,0,0,0.1);
+    border-radius: 3px;
+    background: #f9f9f9;
+    color: #777;
+    -webkit-transition: color 0.3s ease-out;
+    -moz-transition: color 0.3s ease-out;
+    -ms-transition: color 0.3s ease-out;
+    -o-transition: color 0.3s ease-out;
+    transition: color 0.3s ease-out;
+}
+
+.form-1 input[type=text] {
+    margin-bottom: 10px;
+}
+
+.form-1 input[type=text]:hover ~ i,
+.form-1 input[type=password]:hover ~ i {
+    color: #52cfeb;
+}
+
+.form-1 input[type=text]:focus ~ i,
+.form-1 input[type=password]:focus ~ i {
+    color: #42A2BC;
+}
+
+.form-1 input[type=text]:focus,
+.form-1 input[type=password]:focus,
+.form-1 button[type=submit]:focus {
+    outline: none;
+}
+
+.form-1 .submit {
+    /* Size and position */
+    width: 65px;
+    height: 65px;
+    position: absolute;
+    top: 17px;
+    right: -25px;
+    padding: 10px;
+    z-index: 2;
+
+    /* Styles */
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 2px rgba(0,0,0,0.1),
+        0 3px 2px rgba(0,0,0,0.1),
+        inset 0 -3px 2px rgba(0,0,0,0.2);
+}
+
+.form-1 .submit:after {
+    /* Size and position */
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -2px;
+    left: 30px;
+
+    /* Styles */
+    background: #ffffff;
+    
+    /* Other masks trick */
+    box-shadow: 0 62px white, -32px 31px white;
+}
+
+.form-1 button {
+    /* Size and position */
+    width: 100%;
+    height: 100%;
+    margin-top: -1px;
+
+    /* Icon styles */
+    font-size: 1.4em;
+    line-height: 1.75;
+    color: white;
+
+    /* Styles */
+    border: none; /* Remove the default border */
+    border-radius: inherit;
+    background: #52cfeb; /* Fallback */
+    background: -moz-linear-gradient(#52cfeb, #42A2BC);
+    background: -ms-linear-gradient(#52cfeb, #42A2BC);
+    background: -o-linear-gradient(#52cfeb, #42A2BC);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#52cfeb), to(#42A2BC));
+    background: -webkit-linear-gradient(#52cfeb, #42A2BC);
+    background: linear-gradient(#52cfeb, #42A2BC);
+    box-shadow: 
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        0 1px 2px rgba(0,0,0,0.35),
+        inset 0 3px 2px rgba(255,255,255,0.2),
+        inset 0 -3px 2px rgba(0,0,0,0.1);
+
+    cursor: pointer;
+}
+
+.form-1 button:hover,
+.form-1 button[type=submit]:focus {
+    background: #52cfeb;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.form-1 button:active {
+    background: #42A2BC;
+    box-shadow: 
+        inset 0 0 5px rgba(0,0,0,0.3),
+        inset 0 3px 4px rgba(0,0,0,0.3);
+}
+
+
+
+.logo span strong {
+    color: #7ea568;
+    font-weight: 500;
+}
+.form-1 button {
+	background: #7ea568;
+}
+.sign-up {
+    margin: 0 auto;
+    display: table;
+}
+
+
+.reset-pass {
+	width: 100%;
+}
+.reset-pass input[type=text] {
+    margin-bottom: 0;
+}
+.reset-pass .submit {
+    top: -5px;
+}
+.reset-pass .submit:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+
+
+/* ========================== FirePad Styling =========================== */
+.firepad {
+  width: 75% !important;
+  height: 450px;
+  float: left;
+  /* background-color: #f62; /* dark orange background */
+}
+.firepad #firepad {
+	height: 450px;
+}
+.powered-by-firepad {
+    opacity: 0 !important;
+    display: none !important;
+}
+.powered-by-firepad:hover {
+    opacity: 0 !important;
+    display: none !important;
+}
+
+#userlist {
+	width: 25%;
+    float: right;
+}
+#userlist .firepad-userlist {
+	height: 450px;
+}
+#userlist .firepad-userlist-heading {
+	padding: 15px 0 10px 10px;
+	margin: 0;
+}
+#userlist .firepad-userlist-users {
+	position: relative;
+    padding: 5px 8px;
+	left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+#userlist .firepad-userlist-user {
+    height: 39px;
+}
+
+.invite-btn {
+	float: right;
+}
+
+h1.awesome-text {
+	margin: 50px auto;
+	text-align: center;
+	text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.8);
+	color: #333;
+	opacity: 0.4;
+	font: 700 80px 'Bitter';
+}
+.masked {
+    color: #fff;
+}
+div.masked {
+	/*
+	-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+	*/
+	margin: 50px auto;
+	text-align: center;
+	text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.8);
+	color: #333;
+	opacity: 0.4;
+	font: 700 80px 'Bitter';
+}
+.masked {
+
+	
+	
+	background: #222 -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff)) 0 0 no-repeat;
+    -webkit-background-size: 125px;
+    
+    color: rgba(255, 255, 255, 0.1);
+    -webkit-background-clip: text;
+    
+    -webkit-animation-name: masked;
+    -webkit-animation-duration: 6s;
+    -webkit-animation-iteration-count: infinite;
+}
+.masked:hover {
+	text-shadow: 0 0 10px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 40px #00ffff , 0 0 70px #00ffff , 0 0 80px #00ffff , 0 0 100px #00ffff ;
+}
+/*
+@-webkit-keyframes masked-animation {
+	0% {background-position: left bottom;}
+	100% {background-position: right bottom;}
+}*/
+
+@-webkit-keyframes masked
+{
+    0%
+    {
+        background-position: top left;
+    }
+    100%
+    {
+        background-position: top right;
+    }
+}
+
+
+/*================== Chat Styling ====================*/
+
+
+html {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  
+  overflow-x: hidden;
+}
+
+
+.show-me {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+  -webkit-transform: translate3d(-300px, 0, 0);
+          transform: translate3d(-300px, 0, 0);
+}
+
+.title {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  color: white;
+  height: 100px;
+  text-align: center;
+  font-size: 8vw;
+  font-weight: 600;
+}
+
+.chat-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-family: "Lato";
+  -webkit-appearance: none;
+  font-size: 1rem;
+  line-height: 1.2;
+  border-radius: 3px;
+  border: 3px solid #343436;
+  background: #343436;
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none !important;
+  cursor: pointer;
+  text-align: center;
+  font-weight: normal;
+  padding: 10px 16px;
+  padding-left: 30px;
+  outline: 0;
+}
+.chat-button:before {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  bottom: 0;
+  margin: auto;
+  width: 10px;
+  height: 10px;
+  background: #53DD6C;
+  content: "";
+  border-radius: 100px;
+}
+.chat-button:hover {
+  background: #4d4d50;
+}
+.chat-button:active {
+  bottom: 17px;
+}
+
+.chat {
+  position: absolute;
+  background: #28282B;
+  top: 0;
+  right: -300px;
+  height: 100%;
+  width: 300px;
+}
+
+.chat__human {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  color: white;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.chat__human:nth-child(odd) {
+  background: #232326;
+}
+.chat__human:hover {
+  background: #0c0c0c;
+}
+.chat__human > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.chat__avatar {
+  width: 40px;
+  background: #fff;
+  border-radius: 100px;
+  margin-right: 20px;
+}
+
+.chat__users {
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  font-weight: 100;
+  color: #ccc;
+  padding: 10px 20px;
+  background: black;
+}
+
+.conversation {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 200px;
+  width: 300px;
+  height: 350px;
+  background: black;
+}
+
+.conversation__header {
+  color: #ccc;
+  padding: 15px 10px;
+  background: #343436;
+  border-top: 2px solid #FEDD31;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.conversation__msg {
+  padding: 5px 10px;
+  color: white;
+  list-style-type: none;
+  font-size: 12px;
+}
+.conversation__msg span {
+  background: white;
+  color: black;
+  display: table;
+  padding: 10px 20px;
+  border-radius: 100px;
+  float: left;
+}
+
+.right {
+  float: right !important;
+  background: #0ebeff !important;
+  color: white !important;
+}
+
+.input {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background: #0a0a0a;
+  border: 0;
+  outline: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: white;
+}
+.input:focus {
+  background: #121212;
+}
+
+.close-msg {
+  float: right;
+  font-size: 20px;
+  margin-top: -4px;
+}
+
+.chat #messages li {
+	color: white;
+}
+
+
+/*============== Preloader ==============*/
+
+
+
+.del-sess {
+    font-size: 30px;
+    position: absolute;
+	top: 5px;
+    right: 13px;
+	opacity: 0.6;
+}
+.nav-tabs > li > a {
+    width: 200px;
 }

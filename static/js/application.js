@@ -11,5 +11,15 @@
       return false;
     });
   });
+  
+	
 
 }).call(this);
+
+$('.js-trigger').on('click', function() {
+	$('html').toggleClass('show-me') 
+});
+
+$('.all-wrapper').on('click', function() {
+	$('html').removeClass('show-me') 
+});

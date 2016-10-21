@@ -2,604 +2,474 @@
 <html>
 
 <head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-        <!-- Hammer reload -->
-          <script>
-            setInterval(function(){
-              try {
-                if(typeof ws != 'undefined' && ws.readyState == 1){return true;}
-                ws = new WebSocket('ws://'+(location.host || 'localhost').split(':')[0]+':35353')
-                ws.onopen = function(){ws.onclose = function(){document.location.reload()}}
-                ws.onmessage = function(){
-                  var links = document.getElementsByTagName('link'); 
-                    for (var i = 0; i < links.length;i++) { 
-                    var link = links[i]; 
-                    if (link.rel === 'stylesheet' && !link.href.match(/typekit/)) { 
-                      href = link.href.replace(/((&|\?)hammer=)[^&]+/,''); 
-                      link.href = href + (href.indexOf('?')>=0?'&':'?') + 'hammer='+(new Date().valueOf());
-                    }
-                  }
-                }
-              }catch(e){}
-            }, 1000)
-          </script>
-        <!-- /Hammer reload -->
-      
-
-  <link rel='stylesheet' href='static/css/fullcalendar.css'>
-<link rel='stylesheet' href='static/css/datatables/datatables.css'>
-<link rel='stylesheet' href='static/css/datatables/bootstrap.datatables.css'>
-<link rel='stylesheet' href='static/scss/chosen.css'>
-<link rel='stylesheet' href='static/scss/font-awesome/font-awesome.css'>
-<link rel='stylesheet' href='static/css/app.css'>
-
-  <link href='http://fonts.googleapis.com/css?family=Oswald:300,400,700|Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-
-  <link href="static/favicon.ico" rel="shortcut icon">
-  <link href="static/apple-touch-icon.png" rel="apple-touch-icon">
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-    @javascript html5shiv respond.min
-  <![endif]-->
-
-  <title>Responsive Admin template based on Bootstrap 3</title>
-
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='stylesheet' href='static/css/fullcalendar.css'>
+	<link rel='stylesheet' href='static/css/datatables/datatables.css'>
+	<link rel='stylesheet' href='static/css/datatables/bootstrap.datatables.css'>
+	<link rel='stylesheet' href='static/scss/chosen.css'>
+	<link rel='stylesheet' href='static/scss/font-awesome/font-awesome.css'>
+	<link rel='stylesheet' href='static/css/app.css?q=456455'>
+	<link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.css" />
+	<link rel="stylesheet" href="static/css/firepad-userlist.css" />
+    
+    <link rel="stylesheet"href="static/css/bootstrap-notify.css">
+	<link href='http://fonts.googleapis.com/css?family=Oswald:300,400,700|Open+Sans:400,700,300' rel='stylesheet' type='text/css'>\
+	<link href="static/favicon.ico" rel="shortcut icon">
+	<link href="static/apple-touch-icon.png" rel="apple-touch-icon">
+	<title>Co-oprogramming | A Pair Programming Environment</title>
 </head>
 
-<body>
+<body onload="init()">
+	<div class="all-wrapper">
+	  <div class="row">
+		<div class="col-md-3">
+		  <div class="text-center">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+		<span class="sr-only">Toggle navigation</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	  </button>
+	</div>
+	
+	<div class="side-bar-wrapper collapse navbar-collapse navbar-ex1-collapse">
+		<a href="#" class="logo hidden-sm hidden-xs">
+		  <i class="icon-terminal orange"></i>
+		  <span><strong>Co-op</strong>rogramming</span>
+		</a>
+	  <div class="search-box">
+		<input type="text" placeholder="SEARCH FOR SESSION" class="form-control">
+	  </div>
+	  <ul class="side-menu">
+		<li>
+		  <a href="#" data-toggle="modal" data-target="#createSession">
+			<span class="badge badge-notifications pull-right alert-animated"></span>
+			<i class="icon-plus"></i> Create Session
+		  </a>
+		</li>
+		<li>
+		  <a href="#" data-toggle="modal" data-target="#editSession">
+			<span class="badge badge-notifications pull-right alert-animated"></span>
+			<i class="icon-pencil"></i> Edit {self} Session
+		  </a>
+		</li>
+		<li>
+		  <a href="#">
+			<span class="badge badge-notifications pull-right alert-animated">7</span>
+			<i class="icon-archive"></i> Archive {self} Session
+		  </a>
+		</li>
+	  </ul>
+	  <div class="relative-w">
+		<ul class="side-menu">
+		  <li class='current'>
+			<a class='current' href="{{ url_for('index') }}">
+			  <span class="badge pull-right">2</span>
+			  <i class="icon-home"></i> Home
+			</a>
+		  </li>
+		  <li>
+			<a href="#" class="is-dropdown-menu">
+			  <span class="badge pull-right"></span>
+			  <i class="icon-random"></i> Resources
+			</a>
+			<ul>
+			  <li>
+				<a href="https://facebook.github.io/react/docs/why-react.html">
+				  <i class="icon-code"></i>
+				  ReactJS Docs
+				</a>
+			  </li>
+			  <li>
+				<a href="https://facebook.github.io/react-native">
+				  <i class="icon-android"></i>
+				  React Native Docs
+				</a>
+			  </li>
+			  <li>
+				<a href="https://angularjs.org/">
+				  <i class="icon-angle-right"></i>
+				  Angular Docs
+				</a>
+			  </li>
+			  <li>
+				<a href="https://docs.python.org/3/">
+				  <i class="icon-terminal"></i>
+				  Python Docs
+				</a>
+			  </li>
+			</ul>
+		  </li>
+		</ul>
+	  </div>
+	</div>
+	</div>
+	<div class="col-md-9">
 
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		<div class="content-wrapper wood-wrapper">
+			<div class="content-inner">
+				<div class="page-header">
+				  <div class="header-links hidden-xs">
+					<a href="notifications.html"><i class="icon-comments"></i> Archived Sessions</a>
+					<a href="#"><i class="icon-cog"></i> Settings</a>
+					<a href="{{ url_for('logout') }}"><i class="icon-signout"></i> Logout</a>
+				  </div>
+				  <h1><i class="icon-code"></i> Code Away</h1>
+				</div>
+				<ol class="breadcrumb">
+				  <li><a href="#">Home</a></li>
+				  <li class="active">Sessions</li>
+				  <button type="button" class="btn btn-primary invite-btn" data-toggle="modal" data-target="#inviteUser">Invite User</button>
+				</ol>
+				<div class="main-content">
+					<div class="row">
+					  <div class="col-md-12">
+						<ul class="nav nav-tabs" id="my_sessions">
+						  <li class="active"><a href="#session28" data-toggle="tab"><i class="icon-terminal"></i> <span class="session_name_text">New Session</span></a> <button type="button" class="close del-sess" data-dismiss="modal" id="delete_session">&times;</button> </li>
+						  
+						  
+						  {% with cu_sessions = sessions %}
+							{% if cu_sessions %}
+								   {% for session in cu_sessions %}
+									<li class="active"><a href="#session28" data-toggle="tab"><i class="icon-terminal"></i> <span class="session_name_text">{{ session }}</span></a> <button type="button" class="close del-sess" data-dismiss="modal" id="delete_session">&times;</button> </li> 
+								   {% endfor %}
+							{% endif %}
+						{% endwith %}
+						  
+						  
+						  
+						  
+						</ul>
+						<div class="tab-content bottom-margin">
+						  <div class="tab-pane active" id="session28">
+							<div class="padded clearfix">
+								<div id="userlist"></div>
+								<div id="firepad"></div>
+							</div>
+						  </div>
+						  
+						</div>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	
+	</div>
+	</div>
+	</div>
+	
+	
+	
+	
+	
+	<button type="button" class="chat-button js-trigger">Chat (2)</button>
+		
+	<nav class="chat">
+		<h2 class="chat__users">Users Online: 2</h2>		
+		<dl id="messages">
+		  {% for key, value in messages.items() %}
+			<dt>{{ key }}</dt>
+			<dd>{{ value }}</dd>
+		  {% endfor %}
+		</dl>
+		<div class="chat-input-area">
+			<input type="text" id="myMessage">
+			<button id="chatsendbutton">Send</button>
+		</div>
+	</nav>
+	
+	
+	
+	
+	
+	<!-- Create Session Modal -->
+	<div id="createSession" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
 
-    ga('create', 'UA-42863888-3', 'pinsupreme.com');
-    ga('send', 'pageview');
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-header" style="border-bottom: none;">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h3 class="form-title form-title-first"><i class="icon-terminal"></i> Create a New Session</h3>
+		  </div>
+		  <div class="modal-body">
+			
+				
+				<div class="form-group">
+				  <label>Session Name</label>
+				  <input type="text" name="sess_name" class="form-control" placeholder="Session Name" id="create_sess_name">
+				</div>
+			  
+				<div class="form-group">
+				  <label>Session Description</label>
+				  <input type="textarea" name="sess_desc" class="form-control" placeholder="Session Description" id="create_sess_desc">
+				</div>
+				 
+				<button class="btn btn-primary" id="create_session">Create</button>
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
 
-  </script>
+	  </div>
+	</div>
+	
+	<!-- Edit Session Modal -->
+	<div id="editSession" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
 
-<div class="all-wrapper">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="text-center">
-  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-    <span class="sr-only">Toggle navigation</span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </button>
-</div>
-<div class="side-bar-wrapper collapse navbar-collapse navbar-ex1-collapse">
-  <a href="#" class="logo hidden-sm hidden-xs">
-    <i class="icon-cloud-download"></i>
-    <span>Mars Admin</span>
-  </a>
-  <div class="search-box">
-    <input type="text" placeholder="SEARCH" class="form-control">
-  </div>
-  <ul class="side-menu">
-    <li>
-      <a href="notifications.html">
-        <span class="badge badge-notifications pull-right alert-animated">5</span>
-        <i class="icon-flag"></i> Notifications
-      </a>
-    </li>
-  </ul>
-  <div class="relative-w">
-    <ul class="side-menu">
-      <li class='current'>
-        <a class='current' href="index.html">
-          <span class="badge pull-right">17</span>
-          <i class="icon-dashboard"></i> Dashboard
-        </a>
-      </li>
-      <li>
-        <a href="charts.html" class="is-dropdown-menu">
-          <span class="badge pull-right"></span>
-          <i class="icon-bar-chart"></i> Charts
-        </a>
-        <ul>
-          <li>
-            <a href="charts.html#area_chart_anchor">
-              <i class="icon-random"></i>
-              Area Chart
-            </a>
-          </li>
-          <li>
-            <a href="charts.html#circle_chart_anchor">
-              <i class="icon-bullseye"></i>
-              Circular Chart
-            </a>
-          </li>
-          <li>
-            <a href="charts.html#bar_chart_anchor">
-              <i class="icon-signal"></i>
-              Bar Chart
-            </a>
-          </li>
-          <li>
-            <a href="charts.html#line_chart_anchor">
-              <i class="icon-bar-chart"></i>
-              Line Chart
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="forms.html">
-          <span class="badge pull-right">12</span>
-          <i class="icon-terminal"></i> Forms
-        </a>
-      </li>
-      <li>
-        <a href="elements.html" class="is-dropdown-menu">
-          <span class="badge pull-right"></span>
-          <i class="icon-code-fork"></i> UI Elements
-        </a>
-        <ul>
-          <li>
-            <a href="elements.html">
-              <i class="icon-beaker"></i>
-              Elements
-            </a>
-          </li>
-          <li>
-            <a href="icons.html">
-              <i class="icon-picture"></i>
-              Icons
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="datatable.html" class="is-dropdown-menu">
-          <span class="badge pull-right">24</span>
-          <i class="icon-th"></i> Tables
-        </a>
-        <ul>
-          <li>
-            <a href="datatable.html">
-              <i class="icon-list-alt"></i>
-              Data Tables
-            </a>
-          </li>
-          <li>
-            <a href="table.html">
-              <i class="icon-table"></i>
-              Regular Tables
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="calendar.html">
-          <span class="badge pull-right">11</span>
-          <i class="icon-calendar"></i> Calendar
-        </a>
-      </li>
-      <li>
-        <a href="login.html">
-          <span class="badge pull-right"></span>
-          <i class="icon-signin"></i> Login Page
-        </a>
-      </li>
-    </ul>
-  </div>
-</div>
-    </div>
-    <div class="col-md-9">
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-header" style="border-bottom: none;">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h3 class="form-title form-title-first"><i class="icon-terminal"></i> Edit this Session</h3>
+		  </div>
+		  <div class="modal-body">
+			
+				<div class="form-group">
+				  <label>Session Name</label>
+				  <input type="text" name="sess_name" class="form-control session_name_text" placeholder="Session Name" id="edit_sess_name">
+				</div>
+			  
+				<div class="form-group">
+				  <label>Session Description</label>
+				  <input type="textarea" name="sess_desc" class="form-control" placeholder="Session Description" id="edit_sess_desc">
+				</div>
 
-      <div class="content-wrapper wood-wrapper">
-        <div class="content-inner">
-          <div class="page-header">
-  <div class="header-links hidden-xs">
-    <a href="notifications.html"><i class="icon-comments"></i> User Alerts</a>
-    <a href="#"><i class="icon-cog"></i> Settings</a>
-    <a href="#"><i class="icon-signout"></i> Logout</a>
-  </div>
-  <h1><i class="icon-bar-chart"></i> Dashboard</h1>
-</div>
-<ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#">Bread</a></li>
-  <li><a href="#">Crumbs</a></li>
-  <li class="active">Example</li>
-</ol>
-          <div class="main-content">
-            <div class="widget">
-              <div class="alert alert-warning alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <i class="icon-exclamation-sign"></i> <strong>Welcome!</strong> This is a dashboard of the powerful admin template.
-              </div>
-            </div>
-            <div class="widget">
-              <div class="widget-controls pull-right">
-                <a href="#" class="widget-link-remove"><i class="icon-minus-sign"></i></a>
-                <a href="#" class="widget-link-remove"><i class="icon-remove-sign"></i></a>
-              </div>
-              <h3 class="section-title first-title"><i class="icon-tasks"></i> Statistics</h3>
-              <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                  <div class="widget-content-blue-wrapper changed-up">
-                    <div class="widget-content-blue-inner padded">
-                      <div class="pre-value-block"><i class="icon-dashboard"></i> Total Visits</div>
-                      <div class="value-block">
-                        <div class="value-self">10,520</div>
-                        <div class="value-sub">This Week</div>
-                      </div>
-                      <span class="dynamicsparkline">Loading..</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                  <div class="widget-content-blue-wrapper changed-up">
-                    <div class="widget-content-blue-inner padded">
-                      <div class="pre-value-block"><i class="icon-user"></i> New Users</div>
-                      <div class="value-block">
-                        <div class="value-self">1,120</div>
-                        <div class="value-sub">This Month</div>
-                      </div>
-                      <span class="dynamicsparkline">Loading..</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 text-center hidden-md">
-                  <div class="widget-content-blue-wrapper changed-up">
-                    <div class="widget-content-blue-inner padded">
-                      <div class="pre-value-block"><i class="icon-signin"></i> Sold Items</div>
-                      <div class="value-block">
-                        <div class="value-self">275</div>
-                        <div class="value-sub">This Week</div>
-                      </div>
-                      <span class="dynamicsparkline">Loading..</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                  <div class="widget-content-blue-wrapper changed-up">
-                    <div class="widget-content-blue-inner padded">
-                      <div class="pre-value-block"><i class="icon-money"></i> Net Profit</div>
-                      <div class="value-block">
-                        <div class="value-self">$9,240</div>
-                        <div class="value-sub">Yesterday</div>
-                      </div>
-                      <span class="dynamicbars">Loading..</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="widget">
-              <div class="widget-controls pull-right">
-                <a href="#" class="widget-link-remove"><i class="icon-minus-sign"></i></a>
-                <a href="#" class="widget-link-remove"><i class="icon-remove-sign"></i></a>
-              </div>
-              <h3 class="section-title"><i class="icon-bar-chart"></i> Profit Chart</h3>
-              <ul class="nav nav-pills">
-                <li class="active"><a href="#">Hour</a></li>
-                <li><a href="#">Day</a></li>
-                <li><a href="#">Month</a></li>
-                <li class="hidden-xs"><a href="#">Year</a></li>
-              </ul>
-              <div class="widget-content-white">
-                <div class="shadowed-bottom bottom-margin">
-                  <div class="row">
-                    <div class="col-lg-4 col-md-5 col-sm-6 bordered">
-                      <div class="value-block value-bigger changed-up some-left-padding">
-                        <div class="value-self">
-                          $5,450
-                          <span class="changed-icon"><i class="icon-caret-up"></i></span>
-                          <span class="changed-value">+5.00%</span>
-                        </div>
-                        <div class="value-sub">Average of $450.35 Per Day</div>
-                      </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 visible-md visible-lg bordered">
-                      <div class="value-block text-center">
-                        <div class="value-self">520</div>
-                        <div class="value-sub">Total Sales</div>
-                      </div>
-                    </div>
-                    <div class="col-lg-2 bordered visible-lg">
-                      <div class="value-block text-center">
-                        <div class="value-self">1,120</div>
-                        <div class="value-sub">Total Visitors</div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                      <form class="form-inline form-period-selector">
-                        <label class="control-label">Time Period:</label><br>
-                        <input type="text" placeholder="01/12/2011" class="form-control input-sm">
-                        <input type="text" placeholder="01/12/2011" class="form-control input-sm">
-                      </form>
-                    </div>
-                  </div>
-                </div>
-                <div class="padded">
-                  <div id="areachart" style="height: 250px;"></div>
-                </div>
-              </div>
-            </div>
-            <div class="widget">
-              <div class="widget-controls pull-right">
-                <a href="#" class="widget-link-remove"><i class="icon-minus-sign"></i></a>
-                <a href="#" class="widget-link-remove"><i class="icon-remove-sign"></i></a>
-              </div>
-              <h3 class="section-title bottom-margin"><i class="icon-bullseye"></i> Circular Charts</h3>
-              <div class="row bottom-margin">
-                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                  <input type="text" value="75" class="knob" data-fgColor="#df6064" data-linecap="round" data-width="150">
-                </div>
-                <div class="col-lg-3 hidden-md col-sm-6 text-center">
-                  <input type="text" value="65" class="knob" data-fgColor="#8963ac" data-linecap="round" data-width="150">
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                  <input type="text" value="85" class="knob" data-fgColor="#61a9dc" data-linecap="round" data-width="150">
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                  <input type="text" value="68" class="knob" data-fgColor="#71c280" data-linecap="round" data-width="150">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                <ul class="nav nav-tabs">
-                  <li class="active"><a href="#tab_pie_chart" data-toggle="tab"><i class="icon-bullseye"></i> Pie Chart</a></li>
-                  <li><a href="#tab_bar_chart" data-toggle="tab"><i class="icon-bar-chart"></i> Bar Alert</a></li>
-                  <li class="hidden-md hidden-xs"><a href="#tab_table" data-toggle="tab"><i class="icon-table"></i> Table</a></li>
-                </ul>
-                <div class="tab-content bottom-margin">
-                  <div class="tab-pane active" id="tab_pie_chart">
-                    <div class="shadowed-bottom">
-                      <div class="row">
-                        <div class="col-lg-3 col-md-4 col-sm-3 bordered">
-                          <div class="value-block padded-left text-center">
-                            <div class="value-self">520</div>
-                            <div class="value-sub">Total Sales</div>
-                          </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 bordered hidden-md">
-                          <div class="value-block text-center">
-                            <div class="value-self">1,120</div>
-                            <div class="value-sub">Total Visitors</div>
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-md-8 col-sm-6">
-                          <form class="form-inline form-period-selector">
-                            <label class="control-label">Time Period:</label><br>
-                            <input type="text" placeholder="01/12/2011" class="form-control input-sm">
-                            <input type="text" placeholder="01/12/2011" class="form-control input-sm">
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="padded">
-                      <div id="piechart" style=""></div>
-                    </div>
-                  </div>
-                  <div class="tab-pane" id="tab_bar_chart">
-                    <div class="shadowed-bottom">
-                      <div class="row">
-                        <div class="col-md-3 bordered">
-                          <div class="value-block padded-left text-center">
-                            <div class="value-self">256</div>
-                            <div class="value-sub">Total Sales</div>
-                          </div>
-                        </div>
-                        <div class="col-lg-3 bordered hidden-md">
-                          <div class="value-block text-center">
-                            <div class="value-self">3,420</div>
-                            <div class="value-sub">Total Visitors</div>
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-md-9">
-                          <form class="form-inline form-period-selector">
-                            <label class="control-label">Time Period:</label><br>
-                            <input type="text" placeholder="01/12/2011" class="form-control input-sm">
-                            <input type="text" placeholder="01/12/2011" class="form-control input-sm">
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="padded">
-                      <div class="alert alert-warning">
-                        <i class="icon-exclamation-sign"></i> <strong>Message example!</strong> This is an example of how to handle a case when there is no data to load for a chart.</div>
-                    </div>
-                  </div>
-                  <div class="tab-pane" id="tab_table">
-                    <div class="shadowed-bottom">
-                      <div class="row">
-                        <div class="col-md-3 bordered">
-                          <div class="value-block padded-left text-center">
-                            <div class="value-self">112</div>
-                            <div class="value-sub">Total Sales</div>
-                          </div>
-                        </div>
-                        <div class="col-lg-3 bordered hidden-md">
-                          <div class="value-block text-center">
-                            <div class="value-self">2,340</div>
-                            <div class="value-sub">Total Visitors</div>
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-md-9">
-                          <form class="form-inline form-period-selector">
-                            <label class="control-label">Time Period:</label><br>
-                            <input type="text" placeholder="01/12/2011" class="form-control input-sm">
-                            <input type="text" placeholder="01/12/2011" class="form-control input-sm">
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="padded">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>Qty</th>
-                          <th>Price</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Floor Lamp</td>
-                          <td>2</td>
-                          <td>3</td>
-                        </tr>
-                        <tr>
-                          <td>Coffee Mug</td>
-                          <td>4</td>
-                          <td>7</td>
-                        </tr>
-                        <tr>
-                          <td>Television</td>
-                          <td>1</td>
-                          <td>3</td>
-                        </tr>
-                        <tr>
-                          <td>Red Carpet</td>
-                          <td>6</td>
-                          <td>5</td>
-                        </tr>
-                        <tr>
-                          <td>Laptop</td>
-                          <td>3</td>
-                          <td>6</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="widget">
-                  <div class="widget-controls pull-right hidden-md">
-                    <a href="#" class="widget-link-remove"><i class="icon-minus-sign"></i></a>
-                    <a href="#" class="widget-link-remove"><i class="icon-remove-sign"></i></a>
-                  </div>
-                  <h3 class="section-title first-title"><i class="icon-table"></i> Top Sellers</h3>
-                  <div class="widget-content-white padded glossed">
-                    <div id="topsellers_barchart"></div>
-                    <table class="table" id="topsellers_table">
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>Qty</th>
-                          <th>Price</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Floor Lamp</td>
-                          <td>2</td>
-                          <td>3</td>
-                        </tr>
-                        <tr>
-                          <td>Coffee Mug</td>
-                          <td>4</td>
-                          <td>7</td>
-                        </tr>
-                        <tr>
-                          <td>Television</td>
-                          <td>1</td>
-                          <td>3</td>
-                        </tr>
-                        <tr>
-                          <td>Red Carpet</td>
-                          <td>6</td>
-                          <td>5</td>
-                        </tr>
-                        <tr>
-                          <td>Laptop</td>
-                          <td>3</td>
-                          <td>6</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <a href="#" class="btn btn-sm btn-default">view more</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+				<button class="btn btn-primary" id="edit_session">Edit</button>
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
 
-    </div>
-  </div>
-</div>
+	  </div>
+	</div>
+	
+	<!-- Invite Modal -->
+	<div id="inviteUser" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
 
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-header" style="border-bottom: none;">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h3 class="form-title form-title-first"><i class="icon-terminal"></i> Enter an email address</h3>
+		  </div>
+		  <div class="modal-body">
+			
+				<div class="form-group">
+				  <input type="email" name="email" class="form-control" placeholder="Enter email">
+				</div>
+				<button class="btn btn-primary" id="invite_user">Invite</button>
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
 
-<div class="color_settings_box hidden-xs">
-  <h3>Color Settings</h3>
-  <label for="wood-wrapper-checkbox" class="checkbox-w">
-    <input type="checkbox" id="wood-wrapper-checkbox">
-    <span class="wood-checkbox"></span> Wrap in Wood
-  </label>
-  <h3>Background</h3>
-  <div class="color-settings-w" data-replace-element="body" data-leave-class="">
-    <div class="color-box color-box-dark-blue color-tooltip" data-toggle="tooltip" data-placement="top" title="Solid Dark Blue" data-replace-with="body-dark-blue"></div>
-    <div class="color-box color-box-light-blue color-tooltip" data-toggle="tooltip" data-placement="top" title="Solid Light Blue" data-replace-with="body-blue"></div>
-    <div class="color-box color-box-grey color-tooltip" data-toggle="tooltip" data-placement="top" title="Solid Grey" data-replace-with="body-grey"></div>
-    <div class="color-box color-box-linen-dark color-tooltip active" data-toggle="tooltip" data-placement="top" title="Dark Linen" data-replace-with="body-dark-linen"></div>
-    <div class="color-box color-box-linen-light color-tooltip" data-toggle="tooltip" data-placement="top" title="Light Linen" data-replace-with="body-light-linen"></div>
-  </div>
-  <h3>Header</h3>
-  <div class="color-settings-w" data-replace-element=".page-header" data-leave-class="page-header">
-    <div class="color-box color-box-dark-blue color-tooltip" data-toggle="tooltip" data-placement="top" title="Dark Blue" data-replace-with="page-header-dark-blue"></div>
-    <div class="color-box color-box-red active color-tooltip" data-toggle="tooltip" data-placement="top" title="Red" data-replace-with="page-header-red"></div>
-    <div class="color-box color-box-green color-tooltip" data-toggle="tooltip" data-placement="top" title="Green" data-replace-with="page-header-green"></div>
-    <div class="color-box color-box-green-sea color-tooltip" data-toggle="tooltip" data-placement="top" title="Green Sea" data-replace-with="page-header-green-sea"></div>
-    <div class="color-box color-box-orange color-tooltip" data-toggle="tooltip" data-placement="top" title="Emerald" data-replace-with="page-header-orange"></div>
-    <div class="color-box color-box-blue color-tooltip" data-toggle="tooltip" data-placement="top" title="Blue" data-replace-with="page-header-blue"></div>
-  </div>
-  <h3>Active Menu</h3>
-  <div class="color-settings-w" data-replace-element=".side-menu" data-leave-class="side-menu">
-    <div class="color-box color-box-dark-blue color-tooltip" data-toggle="tooltip" data-placement="top" title="Dark Blue" data-replace-with="side-menu-dark-blue"></div>
-    <div class="color-box color-box-red active color-tooltip" data-toggle="tooltip" data-placement="top" title="Red (Default)" data-replace-with="side-menu-red"></div>
-    <div class="color-box color-box-green color-tooltip" data-toggle="tooltip" data-placement="top" title="Green" data-replace-with="side-menu-green"></div>
-    <div class="color-box color-box-green-sea color-tooltip" data-toggle="tooltip" data-placement="top" title="Green Sea" data-replace-with="side-menu-green-sea"></div>
-    <div class="color-box color-box-orange color-tooltip" data-toggle="tooltip" data-placement="top" title="Orange" data-replace-with="side-menu-orange"></div>
-    <div class="color-box color-box-blue color-tooltip" data-toggle="tooltip" data-placement="top" title="Blue" data-replace-with="side-menu-blue"></div>
-  </div>
-  <h3>Content</h3>
-  <div class="color-settings-w" data-replace-element=".content-inner" data-leave-class="content-inner">
-    <div class="color-box color-box-white color-tooltip" data-toggle="tooltip" data-placement="top" title="White" data-replace-with="content-inner-white"></div>
-    <div class="color-box color-box-grey color-tooltip" data-toggle="tooltip" data-placement="top" title="Grey" data-replace-with="content-inner-grey"></div>
-    <div class="color-box color-box-beige active color-tooltip" data-toggle="tooltip" data-placement="top" title="Beige" data-replace-with="content-inner-beige"></div>
-  </div>
-  <div class="toggle-color-settings">
-    <i class="icon-cog"></i>
-    <span>hide</span>
-  </div>
-</div>
+	  </div>
+	</div>
+	
+	
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script src='static/js/jquery.sparkline.min.js'></script>
+	<script src='static/js/bootstrap/modal.js'></script>
+	<script src='static/js/bootstrap/tab.js'></script>
+	<script src='static/js/bootstrap/dropdown.js'></script>
+	<script src='static/js/bootstrap/collapse.js'></script>
+	<script src='static/js/bootstrap/transition.js'></script>
+	<script src='static/js/bootstrap/tooltip.js'></script>
+	<script src='static/js/jquery.knob.js'></script>
+	<script src='static/js/fullcalendar.min.js'></script>
+	<script src='static/js/datatables/datatables.min.js'></script>
+	<script src='static/js/chosen.jquery.min.js'></script>
+	<script src='static/js/datatables/bootstrap.datatables.js'></script>
+	<script src='static/js/raphael-min.js'></script>
+	<script src='static/js/morris-0.4.3.min.js'></script>
+    <script src="static/js/bootstrap-notify.js"></script>
+	<script src='static/js/for_pages/color_settings.js'></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+	<script src='static/js/application.js?q=42'></script>
 
+	<script src='static/js/for_pages/dashboard.js'></script>
+	
+	<!-- Firebase -->
+	<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script src='static/js/jquery.sparkline.min.js'></script>
-<script src='static/js/bootstrap/tab.js'></script>
-<script src='static/js/bootstrap/dropdown.js'></script>
-<script src='static/js/bootstrap/collapse.js'></script>
-<script src='static/js/bootstrap/transition.js'></script>
-<script src='static/js/bootstrap/tooltip.js'></script>
-<script src='static/js/jquery.knob.js'></script>
-<script src='static/js/fullcalendar.min.js'></script>
-<script src='static/js/datatables/datatables.min.js'></script>
-<script src='static/js/chosen.jquery.min.js'></script>
-<script src='static/js/datatables/bootstrap.datatables.js'></script>
-<script src='static/js/raphael-min.js'></script>
-<script src='static/js/morris-0.4.3.min.js'></script>
-<script src='static/js/for_pages/color_settings.js'></script>
-<script src='static/js/application.js'></script>
+	<!-- Ace -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
 
-<script src='static/js/for_pages/dashboard.js'></script>
+	<!-- Firepad -->
+	
+	<script src="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.min.js"></script>
+	<script src="static/js/firepad-userlist.js"></script>
 
+	<script>
+		var ace_session_id = "";
+		function init() {
+		  // Initialize Firebase.
+		  // TODO: replace with your Firebase project configuration.
+		  var config = {
+			apiKey: '{{ fb_api }}',
+			authDomain: '{{ fb_auth_domain }}',
+			databaseURL: '{{ fb_db_url }}'
+		  };
+		  firebase.initializeApp(config);
+
+		  // Get Firebase Database reference.
+		  var firepadRef = getExampleRef();
+		
+		  // Get the localId for current user from Flask.
+          var userId = "{{ logged_in_user_id }}";
+		
+		  // Create Ace editor.
+		  var editor = ace.edit('firepad');
+		  editor.setTheme("ace/theme/monokai");
+		  var session = editor.getSession();
+		  session.setUseWrapMode(true);
+		  session.setUseWorker(false);
+		  session.setMode("ace/mode/python");
+
+		  // Create Firepad.
+		  var firepad = Firepad.fromACE(firepadRef, editor, { userId: userId });
+		  
+		  // Create FirepadUserList (with our desired userId).
+		  var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'), document.getElementById('userlist'), userId, '{{logged_in_user_email}}');
+			
+		  // Initialize contents.
+		  firepad.on('ready', function() {
+			if (firepad.isHistoryEmpty()) {
+			  firepad.setText('# You haven\'t watched a Sci-fi series until you watch Stargate SG-1\n# Stargate Jokes\nprint("Jack: We\'ll cross that bridge when we come it.")\nprint("Bra\'tac: No, the bridge is too well-guarded.")\n');
+			}
+		  });
+		}
+		
+		// Helper to get hash from end of URL or generate a random one.
+		function getExampleRef() {
+		  var ref = firebase.database().ref();
+		  var hash = window.location.hash.replace(/#/g, '');
+		  if (hash) {
+			ref = ref.child(hash);
+			$.getJSON($SCRIPT_ROOT + '/_get_session_id', {
+				id: hash
+			}, function(data) {
+				$(".session_name_text").text(data.sess_name);
+				$(".session_name_text").val(data.sess_name);
+				console.log(data.sess_name);
+			});
+			ace_session_id = hash;
+		  } else {
+			ref = ref.push(); // generate unique location.
+			ref.update({session_name: "Default", invites: [0] });
+			window.location = window.location + '#' + ref.key; // add it as a hash to the URL.
+		  }
+		  if (typeof console !== 'undefined') {
+			console.log('Firebase data: ', ref.toString());
+		  }
+		  return ref;
+		}
+		
+		var socket = io.connect('http://' + document.domain + ':' + location.port);
+		socket.on('connect', function() {
+			socket.emit('my event', {data: 'I\'m connected!'});
+			socket.send('User has connected!');
+		});
+		socket.on('message', function(msg) {
+			$('#messages').append('<li>' + msg + '</li>');
+			console.log('message received');
+		});
+		$('#chatsendbutton').on('click', function() {
+			socket.send($('#myMessage').val());
+			$('#myMessage').val('');
+		})
+		
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		
+		
+$('#create_session').bind('click', function() {
+	if (!$('#create_sess_name').val()) {
+		alert("Name is required!");
+	}
+	else {
+		$.getJSON($SCRIPT_ROOT + '/_create_new_session', {name: $('#create_sess_name').val()}, function(data) {});
+		window.location = $SCRIPT_ROOT;
+	}
+	$.getJSON($SCRIPT_ROOT + '/_my_sessions', {sess_id: ace_session_id}, function(data) {
+		var elements = $();
+		window.location = $SCRIPT_ROOT;
+		$.each(data, function(key, value) {
+			value.forEach(function(item) {
+				var session_url = '<li><a href="'+ $SCRIPT_ROOT + '/sessions/' + item.id + '">' + item.session_name + '</a></li>'
+				elements = elements.add(session_url);
+			});
+		});
+		$('#my_sessions').empty();
+		$('#my_sessions').append(elements);
+	});
+	return false;
+});
+
+$('#edit_session').bind('click', function() {
+	if (!$('#edit_sess_name').val()) {
+		alert("No name provided!");
+	}
+	else {
+		$.getJSON($SCRIPT_ROOT + '/_edit_session', {name: $('#edit_sess_name').val(), desc: $('#edit_sess_desc').val(), sess_id: ace_session_id
+		}, function(data) {});
+	}
+	$.getJSON($SCRIPT_ROOT + '/_my_sessions', {sess_id: ace_session_id}, function(data) {
+		var elements = $();
+		window.location = $SCRIPT_ROOT;
+		$.each(data, function(key, value) {
+			value.forEach(function(item) {
+				var session_url = '<li><a href="'+ $SCRIPT_ROOT + '/sessions/' + item.id + '">' + item.name + '</a></li>'
+				elements = elements.add(session_url);
+			});
+		});
+		$('#my_sessions').empty();
+		$('#my_sessions').append(elements);
+	});
+	return false;
+});
+
+$('#delete_session').bind('click', function() {
+	if (confirm('This cannot be undone. Are you sure you want to delete the session?')) {
+		$.ajax({
+            type: "POST",
+            url: $SCRIPT_ROOT + '/_delete_session',
+            dataType: 'json',
+            success: function({sess_id: ace_session_id}){
+                
+				window.location.replace($SCRIPT_ROOT);
+            }
+        });
+	}
+	window.location = $SCRIPT_ROOT;
+});
+
+$.getJSON($SCRIPT_ROOT + '/_my_sessions', {sess_id: ace_session_id}, function(data) {
+	var elements = $();
+	window.location = $SCRIPT_ROOT;
+	$.each(data, function(key, value) {
+		value.forEach(function(item) {
+			var session_url = '<li><a href="'+ $SCRIPT_ROOT + '/sessions/' + item.id + '">' + item.session_name + '</a></li>'
+			elements = elements.add(session_url);
+		});
+	});
+	$('#my_sessions').empty();
+	$('#my_sessions').append(elements);
+});
+	</script>
 </body>
 
 </html>
