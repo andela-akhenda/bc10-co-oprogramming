@@ -143,9 +143,9 @@ def index():
     messages = {}
     return_data = {}
     try:
-      chat_history = db.child("-KUYCsj_neC3wRfl_qrA").child("chat_history").get()
-      for msg in chat_history.each():
-        messages[msg.key()] = msg.val()
+        chat_history = db.child("-KUYCsj_neC3wRfl_qrA").child("chat_history").get()
+        for msg in chat_history.each():
+            messages[msg.key()] = msg.val()
         all_sessions = db.get()
         for sess in all_sessions.each():
             sess_data = sess.val()
@@ -154,7 +154,7 @@ def index():
             for key in sess_data['users']:
                 return_data[sess.key()]['users'] = key
     except:
-      messages = {}
+        messages = {}
     return render_template('index.html', fb_api = config['apiKey'], fb_auth_domain = config['authDomain'], fb_db_url = config['databaseURL'], logged_in_user_id = flask_login.current_user.localId, logged_in_user_email = flask_login.current_user.email, messages = messages, sessions = return_data)
 
 
